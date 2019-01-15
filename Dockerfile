@@ -28,7 +28,6 @@ COPY --from=builder /go/bin/backoffice /go/bin/backoffice
 EXPOSE 3535
 ENTRYPOINT ["/go/bin/backoffice"]
 
-
 # WORKDIR $GOPATH/src/pekiz_tools_api
 # RUN ls -la
 # EXPOSE 5555
