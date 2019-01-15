@@ -53,7 +53,7 @@ func (a *app) helloworld(w http.ResponseWriter, r *http.Request) {
 	log.Print("service helloworld consult by: " + r.RemoteAddr)
 
 	checkError(nil, w)
-	json.NewEncoder(w).Encode("Hello World From Dev!")
+	json.NewEncoder(w).Encode("Hello World From Dev!!!")
 }
 
 // -----------------------------------------------------
