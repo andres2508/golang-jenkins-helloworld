@@ -27,6 +27,10 @@ COPY --from=builder /go/bin/backoffice /go/bin/backoffice
 # RUN export AWS_CONFIG_FILE = /root/.aws
 EXPOSE 3535
 ENTRYPOINT ["/go/bin/backoffice"]
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 # WORKDIR $GOPATH/src/pekiz_tools_api
 # RUN ls -la
 # EXPOSE 5555
