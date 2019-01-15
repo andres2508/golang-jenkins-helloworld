@@ -50,7 +50,7 @@ pipeline {
                     remote.user = user
                     remote.password = password
                     remote.allowAnyHosts = true
-                    sshCommand remote: remote, command: "./deploy_script.sh"
+                    sshCommand remote: remote, command: "./deploy_script.sh deploy-master-jenkins 3535"
                 }
             }
         }
@@ -69,7 +69,7 @@ pipeline {
                     remote.user = user
                     remote.password = password
                     remote.allowAnyHosts = true
-                    sshCommand remote: remote, command: "./deploy_script.sh"
+                    sshCommand remote: remote, command: "./deploy_script.sh deploy-dev-jenkins 3536"
                 }
             }
         }
