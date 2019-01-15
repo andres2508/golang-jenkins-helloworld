@@ -13,34 +13,19 @@ pipeline {
     agent any
     stages {
         stage('Cloning Git') {
-            when {
-                expression {
-                    return env.GIT_BRANCH == "origin/master"
-                }
-            }
-            // Clona el repositorio -- Solo el Master
+            // Clona el repositorio -- En el que se encuentre el SCM
             steps {
-                git repository
+                checkout scm
             }
         }
         stage('Building image') {
-            when {
-                expression {
-                    return env.GIT_BRANCH == "origin/master"
-                }
-            }
             steps{
                 script {
                     dockerImage = docker.build registry + ":latest"
                 }
             }
         }
-        stage('Deploy Image') {
-            when {
-                expression {
-                    return env.GIT_BRANCH == "origin/master"
-                }
-            }
+        stage('Push Docker Image') {
             steps{
                 script {
                     docker.withRegistry('', registryCredential ) {
@@ -51,10 +36,29 @@ pipeline {
             }
         }
     
-        stage('Deploy SSH') {
+        stage('Deploy Production') {
             when {
                 expression {
                     return env.GIT_BRANCH == "origin/master"
+                }
+            }
+            steps{
+                script {
+                    def remote = [:]
+                    remote.name = 'jenkins'
+                    remote.host = host
+                    remote.user = user
+                    remote.password = password
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: "./deploy_script.sh"
+                }
+            }
+        }
+
+        stage('Deploy Development') {
+            when {
+                expression {
+                    return env.GIT_BRANCH == "origin/dev"
                 }
             }
             steps{
